@@ -3,7 +3,6 @@ export interface Panda {
   name: string;
   image: string;
   interests?: string[] | undefined;
-  onClick(): void;
 }
 
 export interface Item {
@@ -12,5 +11,9 @@ export interface Item {
 
 export interface List {
   pandas: Panda[];
-  onClick: (key: string) => void;
 }
+
+export type errorMessageProps = {
+  error: Error;
+  onRetry(): void;
+};

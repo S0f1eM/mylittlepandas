@@ -5,19 +5,19 @@ import PandasItem from "./PandasItem";
 import { ListGroup, ListGroupItem } from "reactstrap";
 
 const PandasList: React.FC<List> = (props: List) => {
-  const { pandas, onClick } = props;
-
+  const { pandas } = props;
   return (
     <ListGroup>
       {pandas.map((panda: Panda) => (
-        <ListGroupItem className="justify-content-between">
+        <ListGroupItem
+          className="justify-content-between"
+          onClick={() => alert("Ce panda a l'identifiant numéro " + panda.key)}
+        >
           <PandasItem
             key={panda.key}
             name={panda.name}
             image={panda.image}
-            onClick={() =>
-              alert("Ce panda a l'identifiant numéro " + panda.key)
-            }
+            interests={panda.interests}
           />
         </ListGroupItem>
       ))}

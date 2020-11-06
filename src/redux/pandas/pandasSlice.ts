@@ -45,4 +45,5 @@ export const {
   loadPandasSuccess,
   loadPandasFailure,
 } = pandasSlice.actions;
+
 export default pandasSlice.reducer;

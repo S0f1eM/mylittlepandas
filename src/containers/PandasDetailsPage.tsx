@@ -1,7 +1,6 @@
 import React from "react";
 import PandasDetails from "../components/PandasDetails";
 import { RouteComponentProps, withRouter } from "react-router";
-//import { findPanda } from "../redux/pandas/selectors";
 
 //To use a component injected with withRouter props, import and use RouteComponentProps
 type PandasDetailsProps = RouteComponentProps;

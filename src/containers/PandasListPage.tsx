@@ -1,31 +1,42 @@
-import React, { useState, useEffect } from "react";
-//import { withRouter } from "react-router";
-import { useHistory } from "react-router-dom";
-import { History } from "history";
+import React from "react";
 import usePandas from "../hooks/usePandas";
 import PandasList from "../components/PandasList";
 import { Spinner } from "reactstrap";
+import { loadPandasRequest } from "../redux/pandas/pandasSlice";
+import { useDispatch } from "react-redux";
+import { errorMessageProps } from "../types";
+
+//display error on page
+const ErrorMessage = ({ error, onRetry }: errorMessageProps) => {
+  return (
+    <>
+      <p>{error.message}</p>
+      <button color="secondary" onClick={onRetry}>
+        Retry
+      </button>
+    </>
+  );
+};
 
 const PandasListPage = () => {
   const { pandas, fetching, error } = usePandas();
-  const [loading, setLoading] = useState(true);
-  const history: History = useHistory();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    setLoading(false);
-  }, [pandas]);
-
+  //call api again
+  const retry = () => {
+    dispatch(loadPandasRequest());
+  };
   return (
     <>
       <div className="container">
         <h1 className="header-title">My Little Pandas</h1>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <PandasList
-            pandas={pandas}
-            onClick={(key: string) => history.push(`/pandas/${key}`)}
-          />
+        <button onClick={retry}>Retry</button>
+        {fetching && <Spinner />}
+        {error && <ErrorMessage error={error} onRetry={retry} />}
+        {pandas && (
+          <>
+            <PandasList pandas={pandas} />
+          </>
         )}
       </div>
     </>
