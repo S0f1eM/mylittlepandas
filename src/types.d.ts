@@ -6,11 +6,19 @@ export interface Panda {
 }
 
 export interface Item {
+  name: string;
+  interests?: string[];
+  onPress(): void;
+}
+
+interface Details {
   panda: Panda;
+  onClose(): void;
 }
 
 export interface List {
   pandas: Panda[];
+  onSelect(key: string): void;
 }
 
 export type errorMessageProps = {

@@ -7,6 +7,7 @@ export const findPanda = (state: RootState, key: string): Panda | undefined => {
   });
 };
 
-export const getPanda = (state: { data: [] }) => state.data;
-export const isFetching = (state: { fetching: boolean }) => state.fetching;
-export const getError = (state: { error: Error }) => state.error;
+export const getPanda = (state: RootState): Panda[] => state.pandas.data;
+export const isFetching = (state: RootState): boolean => state.pandas.fetching;
+export const getError = (state: RootState): Error | undefined =>
+  state.pandas.error;

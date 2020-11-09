@@ -1,4 +1,4 @@
-import PandasDetails from "../components/PandasDetails";
+import PandasDetails from "./PandaDetails";
 import { Meta } from "@storybook/react/types-6-0";
 
 export default {

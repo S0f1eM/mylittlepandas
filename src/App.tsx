@@ -5,7 +5,7 @@ import { store } from "./redux/store";
 //import { store, persistor } from "./redux/store";
 //import { PersistGate } from "redux-persist/lib/integration/react";
 import PandasListPage from "./containers/PandasListPage";
-import PandasDetailsPage from "./containers/PandasDetailsPage";
+import PandasDetailsPage from "./containers/PandaDetailsPage";
 
 function App() {
   return (
