@@ -4,7 +4,7 @@ import PandaItem from "./PandaItem";
 import { ListGroup } from "reactstrap";
 
 const PandasList: React.FC<List> = (props: List) => {
-  const { pandas } = props;
+  const { pandas, onSelect } = props;
 
   return (
     <div className="container">
@@ -15,7 +15,7 @@ const PandasList: React.FC<List> = (props: List) => {
               key={panda.key}
               name={panda.name}
               interests={panda.interests}
-              onPress={() => panda.key}
+              onPress={() => onSelect(panda.key)}
             />
           ))}
       </ListGroup>
