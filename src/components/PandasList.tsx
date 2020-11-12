@@ -7,7 +7,7 @@ const PandasList: React.FC<List> = (props: List) => {
   const { pandas, onSelect } = props;
 
   return (
-    <div className="container">
+    <div className="container" style={{ margin: "3em 0" }}>
       <ListGroup>
         {pandas &&
           pandas.map((panda: Panda) => (

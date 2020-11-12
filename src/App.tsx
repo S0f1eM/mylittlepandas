@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/lib/integration/react";
 import PandasListPage from "./containers/PandasListPage";
 import PandaDetailsPage from "./containers/PandaDetailsPage";
 import createPandaForm from "./components/createPandaForm";
+import "./App.css";
 
 function App() {
   return (

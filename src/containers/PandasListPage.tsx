@@ -38,13 +38,27 @@ const PandasListPage = () => {
 
   return (
     <>
-      <Jumbotron>
+      <Jumbotron
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          backgroundColor: "#00c975",
+          color: "#fff",
+          padding: "3em 4.5em",
+        }}
+      >
         <h1>My Little Pandas</h1>
-        <Button onClick={retry}>Retry</Button>
+        <Button style={{ color: "#fff" }} color="warning" onClick={retry}>
+          RELOAD
+        </Button>
       </Jumbotron>
       <div className="container">
         <div className="pandas-list">
-          <Button onClick={() => history.push("/create")}>Add a Panda</Button>
+          <div style={{ display: "flex", justifyContent: "flex-start" }}>
+            <Button color="success" onClick={() => history.push("/create")}>
+              Add a Panda
+            </Button>
+          </div>
           {fetching && fetching ? <Spinner color="info" /> : ""}
           {error && error ? <ErrorMessage error={error} onRetry={retry} /> : ""}
           <PandasList

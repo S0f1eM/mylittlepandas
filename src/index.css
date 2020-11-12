@@ -11,27 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-.header-title {
-  padding: 1em 0;
-  color: cadetblue;
-}
-
-.picture {
-  width: 15%;
-  height: auto;
-}
-
-.space-between {
-  margin: 0 0.5em;
-}
-
-.space-left {
-  margin-left: 1em;
-}
-
-.panda-item.media {
-  flex-direction: column;
-  padding: 0.5em;
-  border-bottom: 1px solid black;
-}
