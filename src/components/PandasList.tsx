@@ -8,7 +8,7 @@ const PandasList: React.FC<List> = (props: List) => {
 
   return (
     <div className="container" style={{ margin: "3em 0" }}>
-      <ListGroup>
+      <ListGroup style={{ padding: "1em", background: "#fff" }}>
         {pandas &&
           pandas.map((panda: Panda) => (
             <PandaItem

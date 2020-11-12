@@ -1,12 +1,12 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./App.css";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import PandasListPage from "./containers/PandasListPage";
 import PandaDetailsPage from "./containers/PandaDetailsPage";
 import createPandaForm from "./components/createPandaForm";
-import "./App.css";
 
 function App() {
   return (

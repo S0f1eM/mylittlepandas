@@ -52,7 +52,7 @@ const createPandaForm = () => {
             style={{ display: "flex", justifyContent: "space-evenly" }}
           >
             <Button color="primary">Confirm</Button>
-            <Button color="secondary">Reset</Button>
+            <Button color="secondary">Cancel</Button>
           </FormGroup>
         </Form>
       </Card>

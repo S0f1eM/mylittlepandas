@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Panda } from "../../types";
 
-interface pandaState {
+export interface pandaState {
   data: Panda[];
   fetching: boolean;
   error?: Error;
@@ -18,9 +18,6 @@ export const pandasSlice = createSlice({
   name: "pandas",
   initialState,
   reducers: {
-    /* setPanda(state: pandaState, { payload }) {
-      state.data = payload;
-    },*/
     loadPandasRequest(state: pandaState) {
       state.data = [];
       state.fetching = true;
@@ -40,7 +37,6 @@ export const pandasSlice = createSlice({
 });
 
 export const {
-  /*setPanda,*/
   loadPandasRequest,
   loadPandasSuccess,
   loadPandasFailure,
