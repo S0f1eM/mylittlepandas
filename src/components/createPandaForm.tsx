@@ -1,43 +1,43 @@
 import React from "react";
-import {
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Button,
-  Jumbotron,
-  Card,
-} from "reactstrap";
+import { Form, FormGroup, Input, Label, Button, Card } from "reactstrap";
+import { useHistory } from "react-router-dom";
+//
+//declare le type des props ?
+export interface FormData {
+  name: string;
+  interests: string;
+  image: string;
+}
+//
+const CreatePandaForm = () => {
+  const history = useHistory();
+  //
+  const onCancel = () => {
+    history.push("/");
+  };
+  const handleSubmit = () => {
+    console.log("submit clic");
+  };
 
-const createPandaForm = () => {
   return (
     <>
-      <Jumbotron
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          backgroundColor: "#00c975",
-          color: "#fff",
-          padding: "3em 4.5em",
-        }}
-      >
-        <h1>My Little Pandas</h1>
-      </Jumbotron>
-
       <Card style={{ margin: "2em 8em" }}>
-        <Form style={{ padding: "1em 8em", textAlign: "left" }}>
-          <h2 style={{ color: "green", padding: "0.5em" }}>Add a panda</h2>
-          <hr />
+        <h2 style={{ color: "#00C975", padding: "0.5em" }}>Add a panda</h2>
+        <hr />
+        <Form
+          onSubmit={handleSubmit}
+          style={{ padding: "1em 3em", textAlign: "left" }}
+        >
           <FormGroup>
             <Label>Panda's name :</Label>
-            <Input type="name" placeholder="Enter the panda's name" />
+            <Input type="text" placeholder="Enter the panda's name" />
           </FormGroup>
           <FormGroup>
             <Label>Panda's Interests :</Label>
-            <Input type="interests" placeholder="Enter the panda's interests" />
+            <Input type="text" placeholder="Enter the panda's interests" />
           </FormGroup>
           <FormGroup>
-            <label for="pictureFile">Panda's picture :</label>
+            <label htmlFor="pictureFile">Panda's picture :</label>
             <Input
               style={{ width: "auto" }}
               type="file"
@@ -51,8 +51,12 @@ const createPandaForm = () => {
           <FormGroup
             style={{ display: "flex", justifyContent: "space-evenly" }}
           >
-            <Button color="primary">Confirm</Button>
-            <Button color="secondary">Cancel</Button>
+            <Button color="success" onClick={handleSubmit}>
+              Confirm
+            </Button>
+            <Button color="secondary" onClick={onCancel}>
+              Cancel
+            </Button>
           </FormGroup>
         </Form>
       </Card>
@@ -60,4 +64,4 @@ const createPandaForm = () => {
   );
 };
 
-export default createPandaForm;
+export default CreatePandaForm;

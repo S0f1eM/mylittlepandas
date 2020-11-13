@@ -5,9 +5,10 @@ import { withRouter } from "react-router";
 
 import usePandas from "../hooks/usePandas";
 import PandasList from "../components/PandasList";
-import { Alert, Button, Spinner, Jumbotron } from "reactstrap";
+import { Alert, Button, Spinner } from "reactstrap";
 import { loadPandasRequest } from "../redux/pandas/pandasSlice";
 import { errorMessageProps } from "../types";
+import Header from "../components/Header";
 
 //display error on page
 const ErrorMessage = ({ error, onRetry }: errorMessageProps) => {
@@ -38,33 +39,28 @@ const PandasListPage = () => {
 
   return (
     <>
-      <Jumbotron
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          backgroundColor: "#00c975",
-          color: "#fff",
-          padding: "3em 4.5em",
-        }}
-      >
-        <h1>My Little Pandas</h1>
-        <Button style={{ color: "#fff" }} color="warning" onClick={retry}>
-          RELOAD
-        </Button>
-      </Jumbotron>
+      <Header />
       <div className="container">
         <div className="pandas-list">
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <Button color="success" onClick={() => history.push("/create")}>
-              Add a Panda
+            <Button
+              style={{ color: "#fff", margin: "0 2em" }}
+              color="warning"
+              onClick={retry}
+            >
+              List Request
             </Button>
           </div>
           {fetching && fetching ? <Spinner color="info" /> : ""}
           {error && error ? <ErrorMessage error={error} onRetry={retry} /> : ""}
-          <PandasList
-            pandas={pandas}
-            onSelect={(key: string) => history.push("/pandas/" + key)}
-          />
+          <PandasList pandas={pandas} onSelect={onSelect} />
+          <Button
+            style={{ margin: "2em 0 5em" }}
+            color="primary"
+            onClick={() => history.push("/createPanda")}
+          >
+            Add a Panda
+          </Button>
         </div>
       </div>
     </>

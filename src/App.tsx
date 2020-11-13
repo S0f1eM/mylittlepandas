@@ -6,7 +6,8 @@ import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import PandasListPage from "./containers/PandasListPage";
 import PandaDetailsPage from "./containers/PandaDetailsPage";
-import createPandaForm from "./components/createPandaForm";
+import CreatePandaForm from "./components/CreatePandaForm";
+import CreatePandaPage from "./containers/CreatePandaPage";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
               <Route exact path="/" component={PandasListPage} />
               <Route exact path="/pandas" component={PandasListPage} />
               <Route exact path="/pandas/:id" component={PandaDetailsPage} />
-              <Route exact path="/create" component={createPandaForm} />
+              <Route exact path="/createPanda" component={CreatePandaPage} />
             </Switch>
           </Router>
         </PersistGate>

@@ -1,5 +1,5 @@
 import React from "react";
-import createPandaForm from "./createPandaForm";
+import createPandaForm from "./CreatePandaForm";
 import { Meta } from "@storybook/react";
 
 export default {

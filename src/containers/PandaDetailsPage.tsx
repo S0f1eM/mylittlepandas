@@ -6,7 +6,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { Panda } from "../types";
-import { Jumbotron } from "reactstrap";
+import Header from "../components/Header";
 
 const usePanda = (id: string): Panda | undefined => {
   const findPanda = createSelector(
@@ -29,17 +29,7 @@ const PandaDetailsPage = () => {
   }
   return (
     <>
-      <Jumbotron
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          backgroundColor: "#00c975",
-          color: "#fff",
-          padding: "3em 4.5em",
-        }}
-      >
-        <h1>My Little Panda</h1>
-      </Jumbotron>
+      <Header />
       <PandaDetails panda={panda} onClose={handleClick} />
     </>
   );
