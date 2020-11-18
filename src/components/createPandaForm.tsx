@@ -1,9 +1,7 @@
 import React from "react";
-import { Form, FormGroup, Input, Label, Button } from "reactstrap";
-import { useHistory } from "react-router-dom";
+import { FormGroup, Input, Label, Button, FormText } from "reactstrap";
 import { useState } from "react";
-import { validateLocaleAndSetLanguage } from "typescript";
-//
+
 export interface dataFormValues {
   name: string;
   interests: string;
@@ -11,61 +9,54 @@ export interface dataFormValues {
 }
 
 export interface formProps {
-  initialValues: dataFormValues;
+  onCancel(): void;
+  onSubmit(values: any): void;
 }
 
-const CreatePandaForm = () => {
+//render error messages
+export const RenderError = (errors: Error) => {
+  return (
+    <div className="invalid-feedback">
+      <h5>{errors.name}</h5>
+      <p>{errors.message}</p>
+    </div>
+  );
+};
+
+const CreatePandaForm = (props: formProps) => {
   const [name, setName] = useState("");
   const [interests, setInterests] = useState("");
   const [image, setImage] = useState("");
-  const errors: Error = { name: "", message: "" };
+  const { onCancel, onSubmit } = props;
+  //button disabled
   const isEnabled = name && interests && image;
 
-  //back to home page with cancel button
-  const history = useHistory();
-  const onCancel = () => {
-    history.push("/");
+  //validation name
+  const nameIsValid = (value: string) => {
+    const isValidName: any = new RegExp(/^[A-Za-z]+$/);
+    return isValidName.test(value) ? "is-valid" : "is-invalid";
   };
-
-  function renderError(error: any) {
-    if (error) {
-      return (
-        <>
-          <div>{error.name}</div>
-          <div>{error.message}</div>
-        </>
-      );
-    }
-  }
-  const isValid = (value: string) => {
-    if (value) {
-      return "is-valid";
-    } else {
-      return "is-invalid";
-    }
+  //validation interest list
+  const interestsIsValid = (value: string) => {
+    //words less than 20 letters separated by space or comma
+    const isValidList: any = new RegExp(/(\b\w{1,20}\b)(,\s*([a-zA-Z]))*/);
+    return isValidList.test(value) ? "is-valid" : "is-invalid";
   };
-
-  const handleSubmit = (e: React.FormEvent<HTMLInputElement>): void => {
-    console.log(`
-    Name: ${name}
-    Interests: ${interests}
-    image: ${image}
-  `);
-    e.preventDefault();
+  //validation image url
+  const imageIsValid = (value: string) => {
+    const isValidURL: any = new RegExp(
+      /(https?)|(http):(\/\/.*\)|(gph.is).(?:png|jpg|gif))/i
+    );
+    return isValidURL.test(value) ? "is-valid" : "is-invalid";
   };
-
-  /*function renderPreview(e : any) {
-    let imgPreview;
-    if (image) {
-      imgPreview = <img src={URL.createObjectURL(e.target.files[0])} alt="" />;
-    }
-    return imgPreview;
-  }*/
 
   return (
     <>
-      <Form style={{ padding: "1em 3em", textAlign: "left" }}>
-        <div className="invalid-feedback">{renderError}</div>
+      {Error && <div className="invalid-feedback">{Error}</div>}
+      <form
+        onSubmit={onSubmit}
+        style={{ padding: "1em 3em", textAlign: "left" }}
+      >
         <FormGroup>
           <Label htmlFor="name">Panda's name :</Label>
           <Input
@@ -73,10 +64,13 @@ const CreatePandaForm = () => {
             name="name"
             onChange={(e: any) => setName(e.target.value)}
             value={name}
-            className={isValid(name)}
+            className={nameIsValid(name)}
             placeholder="..."
             required
           />
+          <FormText color="muted">
+            Only letters are allowed for the Panda's name.
+          </FormText>
         </FormGroup>
         <FormGroup>
           <Label>Panda's Interests :</Label>
@@ -85,38 +79,39 @@ const CreatePandaForm = () => {
             name="interests"
             onChange={(e: any) => setInterests(e.target.value)}
             values={interests}
-            className={isValid(interests)}
+            className={interestsIsValid(interests)}
             placeholder="..."
             required
           />
+          <FormText color="muted">
+            If multiple interests, you must separate them with comma.
+          </FormText>
         </FormGroup>
         <FormGroup>
           <label htmlFor="pictureFile">Panda's picture :</label>
           <Input
-            type="text"
+            type="url"
             name="image"
             onChange={(e: any) => setImage(e.target.value)}
             value={image}
-            className={isValid(image)}
+            className={imageIsValid(image)}
             placeholder="Enter image link/url..."
             required
           />
+          <FormText color="muted">
+            You can use gif, jpg or png link/url.
+          </FormText>
         </FormGroup>
         <hr />
         <FormGroup style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <Button
-            color="primary"
-            type="submit"
-            disabled={!isEnabled}
-            onClick={handleSubmit}
-          >
+          <Button color="primary" type="submit" disabled={!isEnabled}>
             Confirm
           </Button>
           <Button color="secondary" onClick={onCancel}>
             Cancel
           </Button>
         </FormGroup>
-      </Form>
+      </form>
     </>
   );
 };
