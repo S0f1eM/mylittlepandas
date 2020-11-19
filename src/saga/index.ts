@@ -1,6 +1,6 @@
 import { call, put, all, takeLatest } from "redux-saga/effects";
-import { Panda } from "../../types";
-import api from "../services/api";
+import { Panda } from "./../types";
+import api from "../redux/services/api";
 import {
   loadPandasRequest,
   loadPandasSuccess,
@@ -8,7 +8,7 @@ import {
   createPandaFailure,
   createPandaSuccess,
   createPandaRequest,
-} from "../pandas/pandasSlice";
+} from "../redux/pandas/pandasSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { push } from "connected-react-router";
 

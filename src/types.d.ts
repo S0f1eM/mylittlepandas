@@ -7,7 +7,7 @@ export interface Panda {
 
 export interface Item {
   name: string;
-  interests?: string[];
+  interests?: string[] | undefined;
   onPress(): void;
 }
 

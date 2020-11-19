@@ -10,24 +10,14 @@ export interface dataFormValues {
 
 export interface formProps {
   onCancel(): void;
-  onSubmit(values: any): void;
+  onSubmit(values: any): dataFormValues;
 }
-
-//render error messages
-export const RenderError = (errors: Error) => {
-  return (
-    <div className="invalid-feedback">
-      <h5>{errors.name}</h5>
-      <p>{errors.message}</p>
-    </div>
-  );
-};
-
-const CreatePandaForm = (props: formProps) => {
+const CreatePandaForm: React.FC<formProps> = (props: formProps) => {
   const [name, setName] = useState("");
   const [interests, setInterests] = useState("");
   const [image, setImage] = useState("");
   const { onCancel, onSubmit } = props;
+
   //button disabled
   const isEnabled = name && interests && image;
 
@@ -52,7 +42,6 @@ const CreatePandaForm = (props: formProps) => {
 
   return (
     <>
-      {Error && <div className="invalid-feedback">{Error}</div>}
       <form
         onSubmit={onSubmit}
         style={{ padding: "1em 3em", textAlign: "left" }}

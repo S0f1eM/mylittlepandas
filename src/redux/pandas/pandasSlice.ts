@@ -38,7 +38,9 @@ export const pandasSlice = createSlice({
       state.error = undefined;
     },
     createPandaSuccess(state: pandaState, action: PayloadAction<Panda>) {
-      state.data = [...state.data, action.payload];
+      state.data
+        ? (state.data = [...state.data, action.payload])
+        : (state.data = [action.payload]);
       state.fetching = false;
       state.error = undefined;
     },

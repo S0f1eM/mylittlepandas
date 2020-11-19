@@ -5,7 +5,7 @@ import createSagasMiddleware from "redux-saga";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import pandasSlice from "./pandas/pandasSlice";
-import rootSaga from "./sagas";
+import rootSaga from "./../saga";
 import { reducer as formReducer } from "redux-form";
 import history from "./services/history";
 
@@ -15,23 +15,22 @@ export const rootReducer = combineReducers({
   router: connectRouter(history),
 });
 
-const sagaMiddleware = createSagasMiddleware();
-
 const initialState = {};
+
 const persistConfig = {
   key: "pandas",
-  storage: storage,
+  storage,
   whitelist: ["pandasSlice"],
   blacklist: ["form", "router"],
 };
+const sagaMiddleware = createSagasMiddleware();
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
   middleware: [sagaMiddleware, routerMiddleware(history)],
   preloadedState: initialState,
-  devTools: process.env.NODE_ENV !== "production",
+  reducer: persistedReducer,
 });
 
 sagaMiddleware.run(rootSaga);
