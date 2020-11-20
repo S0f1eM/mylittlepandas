@@ -25,3 +25,14 @@ export type errorMessageProps = {
   error: Error;
   onRetry(): void;
 };
+
+export interface formProps {
+  onCancel(): void;
+  onSubmit(values: dataFormValues): void;
+}
+
+export interface dataFormValues {
+  name: string;
+  interests: string;
+  image: string;
+}

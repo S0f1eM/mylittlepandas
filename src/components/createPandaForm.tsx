@@ -1,38 +1,28 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { FormGroup, Input, Label, Button, FormText } from "reactstrap";
 import { useState } from "react";
+import { formProps } from "../types";
 
-export interface dataFormValues {
-  name: string;
-  interests: string;
-  image: string;
-}
-
-export interface formProps {
-  onCancel(): void;
-  onSubmit(values: any): dataFormValues;
-}
-const CreatePandaForm: React.FC<formProps> = (props: formProps) => {
-  const [name, setName] = useState("");
-  const [interests, setInterests] = useState("");
-  const [image, setImage] = useState("");
-  const { onCancel, onSubmit } = props;
+const CreatePandaForm = (props: formProps) => {
+  const [name, setName] = useState<string>("");
+  const [interests, setInterests] = useState<string>("");
+  const [image, setImage] = useState<string>("");
+  const [errors, setErrors] = useState<string[]>([]);
 
   //button disabled
   const isEnabled = name && interests && image;
 
-  //validation name
+  //extra : input validation
   const nameIsValid = (value: string) => {
     const isValidName: any = new RegExp(/^[A-Za-z]+$/);
     return isValidName.test(value) ? "is-valid" : "is-invalid";
+    // TO DO : is-invalid ? renderError
   };
-  //validation interest list
   const interestsIsValid = (value: string) => {
     //words less than 20 letters separated by space or comma
     const isValidList: any = new RegExp(/(\b\w{1,20}\b)(,\s*([a-zA-Z]))*/);
     return isValidList.test(value) ? "is-valid" : "is-invalid";
   };
-  //validation image url
   const imageIsValid = (value: string) => {
     const isValidURL: any = new RegExp(
       /(https?)|(http):(\/\/.*\)|(gph.is).(?:png|jpg|gif))/i
@@ -40,18 +30,74 @@ const CreatePandaForm: React.FC<formProps> = (props: formProps) => {
     return isValidURL.test(value) ? "is-valid" : "is-invalid";
   };
 
+  //error to handle : TO DO => validate
+  const handleChangeName = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setName(event.target.value);
+    },
+    []
+  );
+
+  const handleChangeInterests = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setInterests(event.target.value);
+    },
+    []
+  );
+
+  const handleChangeImage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setImage(event.target.value);
+    },
+    []
+  );
+
+  const handleSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      if (name === "") {
+        errors.push("Veuillez saisir un nom");
+      }
+      if (interests === "") {
+        errors.push("Veuillez saisir des centres d'intérêt");
+      }
+      if (image === "") {
+        errors.push("Veuillez saisir une image");
+      }
+      if (errors.length > 0) {
+        setErrors(errors);
+      } else {
+        setErrors([]);
+        props.onSubmit({
+          name,
+          interests,
+          image,
+        });
+      }
+      event.preventDefault();
+    },
+    [name, interests, image]
+  );
+
   return (
     <>
       <form
-        onSubmit={onSubmit}
+        noValidate
+        onSubmit={handleSubmit}
         style={{ padding: "1em 3em", textAlign: "left" }}
       >
+        {errors && (
+          <ul>
+            {errors.map((error) => (
+              <li style={{ color: "red" }}>{error}</li>
+            ))}
+          </ul>
+        )}
         <FormGroup>
           <Label htmlFor="name">Panda's name :</Label>
           <Input
             type="text"
             name="name"
-            onChange={(e: any) => setName(e.target.value)}
+            onChange={handleChangeName}
             value={name}
             className={nameIsValid(name)}
             placeholder="..."
@@ -66,8 +112,8 @@ const CreatePandaForm: React.FC<formProps> = (props: formProps) => {
           <Input
             type="text"
             name="interests"
-            onChange={(e: any) => setInterests(e.target.value)}
-            values={interests}
+            onChange={handleChangeInterests}
+            value={interests}
             className={interestsIsValid(interests)}
             placeholder="..."
             required
@@ -81,7 +127,7 @@ const CreatePandaForm: React.FC<formProps> = (props: formProps) => {
           <Input
             type="url"
             name="image"
-            onChange={(e: any) => setImage(e.target.value)}
+            onChange={handleChangeImage}
             value={image}
             className={imageIsValid(image)}
             placeholder="Enter image link/url..."
@@ -96,7 +142,7 @@ const CreatePandaForm: React.FC<formProps> = (props: formProps) => {
           <Button color="primary" type="submit" disabled={!isEnabled}>
             Confirm
           </Button>
-          <Button color="secondary" onClick={onCancel}>
+          <Button color="secondary" onClick={props.onCancel}>
             Cancel
           </Button>
         </FormGroup>

@@ -18,7 +18,7 @@ const PandaDetails: React.FC<Details> = (props: Details) => {
           }}
         >
           <Media
-            center
+            center="true"
             src={props.panda.image}
             alt="image"
             className="picture"
@@ -35,7 +35,7 @@ const PandaDetails: React.FC<Details> = (props: Details) => {
                 close
                 aria-label="Cancel"
                 onClick={onClose}
-                style={{ marginTop: "-4em", marginRight: "-3em" }}
+                style={{ marginTop: "-2em", marginRight: "-3em" }}
               >
                 x
               </Button>

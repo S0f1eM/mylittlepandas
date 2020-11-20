@@ -1,14 +1,14 @@
 import React from "react";
 import PandaDetails from "../components/PandaDetails";
 import { withRouter } from "react-router";
-import { useHistory, useParams } from "react-router-dom";
-import { createSelector } from "@reduxjs/toolkit";
+import { RouteComponentProps } from "react-router-dom";
 import { RootState } from "../redux/store";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Panda } from "../types";
 import Header from "../components/Header";
+import { findPanda } from "../redux/pandas/selectors";
 
-const usePanda = (id: string): Panda | undefined => {
+/*const usePanda = (id: string): Panda | undefined => {
   const findPanda = createSelector(
     (state: RootState) => state.pandas.data,
     (pandas) => pandas.find((panda) => panda.key === id)
@@ -16,23 +16,44 @@ const usePanda = (id: string): Panda | undefined => {
   const panda: Panda | undefined = useSelector(findPanda);
 
   return panda;
-};
+};*/
 
-const PandaDetailsPage = () => {
-  const history = useHistory();
+interface PropsFromState {
+  panda: Panda | undefined;
+}
+
+interface PathParamsType {
+  id: string;
+}
+
+type Props = RouteComponentProps<PathParamsType> & PropsFromState;
+
+class PandaDetailsPage extends React.Component<Props> {
+  /*const history = useHistory();
   const { id } = useParams<{ id: string }>();
 
   const panda = usePanda(id);
-
-  function handleClick() {
-    history.push("/");
+*/
+  handleClick = () => {
+    this.props.history.push("/");
+  };
+  render() {
+    const { panda } = this.props;
+    return (
+      <>
+        <Header />
+        {panda ? (
+          <PandaDetails panda={panda} onClose={this.handleClick} />
+        ) : null}
+      </>
+    );
   }
-  return (
-    <>
-      <Header />
-      <PandaDetails panda={panda} onClose={handleClick} />
-    </>
-  );
+}
+
+const mapStateToProps = (state: RootState, props: Props): PropsFromState => {
+  return {
+    panda: findPanda(state, props.match!.params.id),
+  };
 };
 
-export default withRouter(PandaDetailsPage);
+export default connect(mapStateToProps)(withRouter(PandaDetailsPage));

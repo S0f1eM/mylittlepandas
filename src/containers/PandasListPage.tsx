@@ -4,20 +4,20 @@ import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router";
 
 import usePandas from "../hooks/usePandas";
-import PandasList from "../components/PandasList";
 import { Alert, Button, Spinner } from "reactstrap";
 import { loadPandasRequest } from "../redux/pandas/pandasSlice";
 import { errorMessageProps } from "../types";
+import PandasList from "../components/PandasList";
 import Header from "../components/Header";
 
 //display error on page
 const ErrorMessage = ({ error, onRetry }: errorMessageProps) => {
   return (
     <>
-      <p>
-        Un problème est survenu lors du chargement des données {error.message}
-      </p>
-      <Alert color="danger">{error.message}</Alert>
+      <Alert color="danger">
+        <p>Un problème est survenu lors du chargement des données :</p>
+        {error}
+      </Alert>
       <Button color="secondary" onClick={onRetry}>
         Retry
       </Button>

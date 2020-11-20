@@ -1,0 +1,11 @@
+{
+    "cSpell.words": [
+        "liste"
+    ],
+    "json.schemas": [
+    
+    ],
+    "eslint.codeAction.disableRuleComment": {
+        "enable": false
+    }
+}
